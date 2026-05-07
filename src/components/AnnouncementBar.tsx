@@ -1,5 +1,6 @@
 // Top-of-page announcement bar. Marketing copy lives here.
 const MESSAGES = [
+  "SHIPS EVERY FRIDAY · ORDER BY WEDNESDAY",
   "FREE SHIPPING ON ORDERS OVER $50",
   "BUY 2 PACKS · SAVE 10%",
   "BUY 3 PACKS · SAVE 15%",

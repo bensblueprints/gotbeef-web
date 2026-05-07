@@ -18,18 +18,14 @@ export default function FlavorCard({ flavor }: { flavor: Flavor }) {
   const { add } = useCart();
   return (
     <article className="group bg-paper border border-ink/10 hover:border-ink transition-colors flex flex-col">
-      <Link href={`/products/${flavor.slug}`} className="block aspect-square bg-ink relative overflow-hidden">
-        {/* Stylized bag mockup as the card image */}
-        <div className="absolute inset-6 border-2 border-white"/>
-        <div className="absolute inset-9 border border-white/40"/>
-        <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-6">
-          <span className="eyebrow text-white/70 mb-2">Gourmet Brisket Beef Jerky</span>
-          <span className="font-serif font-black text-white text-3xl leading-none tracking-tight">{flavor.shortName}</span>
-          <div className="w-12 h-px bg-white/60 my-4"/>
-          <span className="eyebrow text-white">Net Wt 3 oz</span>
-        </div>
+      <Link href={`/products/${flavor.slug}`} className="block aspect-square bg-bone relative overflow-hidden">
+        <img
+          src={flavor.bagImage}
+          alt={`${flavor.name} jerky bag`}
+          className="absolute inset-0 w-full h-full object-contain p-6 transition-transform duration-500 group-hover:scale-[1.03]"
+        />
       </Link>
-      <div className="p-5 flex flex-col gap-3 flex-1">
+      <div className="p-5 flex flex-col gap-3 flex-1 border-t border-ink/10">
         <div className="flex items-center justify-between">
           <Link href={`/products/${flavor.slug}`} className="font-serif font-black text-xl tracking-tight hover:opacity-60">
             {flavor.shortName}

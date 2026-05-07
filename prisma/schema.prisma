@@ -26,6 +26,7 @@ model User {
   addresses     Address[]
   orders        Order[]
   emailPrefs    EmailPreferences?
+  reviews       Review[]
 }
 
 model Account {
@@ -157,6 +158,34 @@ model EmailPreferences {
   orderUpdates  Boolean @default(true)
   newProducts   Boolean @default(true)
   updatedAt     DateTime @updatedAt
+}
+
+// ---------- Reviews ----------
+enum ReviewStatus {
+  pending
+  approved
+  rejected
+}
+
+model Review {
+  id             String       @id @default(cuid())
+  userId         String?
+  user           User?        @relation(fields: [userId], references: [id], onDelete: SetNull)
+  authorName     String
+  authorEmail    String
+  flavorSku      String       // matches Flavor.sku in src/lib/products.ts
+  rating         Int          // 1..5
+  title          String?
+  body           String
+  imageData      Bytes?       // optional bag photo bytes (served by /api/reviews/:id/image)
+  imageType      String?      // mime type, e.g. image/jpeg
+  status         ReviewStatus @default(pending)
+  moderationNote String?
+  createdAt      DateTime     @default(now())
+  approvedAt     DateTime?
+
+  @@index([flavorSku, status])
+  @@index([status, createdAt])
 }
 
 // Webhook event log — debugging + replay.

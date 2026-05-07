@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useCart } from "@/lib/cartStore";
 import { flavorBySku } from "@/lib/products";
 import { formatUSD, FREE_SHIPPING_THRESHOLD_CENTS } from "@/lib/pricing";
+import { shipsThisCopy } from "@/lib/shipping";
 
 export default function CartPage() {
   const cart = useCart();
@@ -29,8 +30,14 @@ export default function CartPage() {
               const name = line.isSampler ? "5-Flavor Sampler" : (flavor?.name ?? line.sku);
               return (
                 <div key={line.sku} className="flex items-center gap-4 border border-ink/15 p-4 bg-paper">
-                  <div className="w-20 h-20 bg-ink flex items-center justify-center text-white text-[10px] uppercase tracking-[0.2em] font-bold text-center p-2">
-                    {line.isSampler ? "Sampler" : flavor?.shortName ?? line.sku}
+                  <div className="w-20 h-20 bg-bone border border-ink/10 flex items-center justify-center overflow-hidden">
+                    {!line.isSampler && flavor?.bagImage ? (
+                      <img src={flavor.bagImage} alt={flavor.name} className="w-full h-full object-contain p-1"/>
+                    ) : (
+                      <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-center p-2">
+                        {line.isSampler ? "Sampler" : flavor?.shortName ?? line.sku}
+                      </span>
+                    )}
                   </div>
                   <div className="flex-1">
                     <p className="font-serif font-black text-xl tracking-tight">{name}</p>
@@ -76,6 +83,12 @@ export default function CartPage() {
                 </div>
               </div>
             )}
+
+            <div className="border border-white/30 p-3">
+              <p className="eyebrow text-white/60 mb-1">Next dispatch</p>
+              <p className="font-serif font-black text-lg tracking-tight leading-tight">{shipsThisCopy()}</p>
+              <p className="mt-1 text-[11px] text-white/60">Order by Wed 11:59pm CT to make this Friday.</p>
+            </div>
 
             <div className="rule-soft bg-white/30"/>
             <div className="flex justify-between font-serif font-black text-2xl">

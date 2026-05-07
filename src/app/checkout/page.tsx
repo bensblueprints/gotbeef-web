@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { useCart } from "@/lib/cartStore";
 import { formatUSD } from "@/lib/pricing";
+import { shipsThisCopy } from "@/lib/shipping";
 
 export default function CheckoutPage() {
   const cart = useCart();
@@ -40,7 +41,18 @@ export default function CheckoutPage() {
   }
 
   return (
-    <section className="max-w-6xl mx-auto px-6 py-16 grid md:grid-cols-2 gap-12">
+    <section className="max-w-6xl mx-auto px-6 py-16">
+      <div className="bg-ink text-white p-6 md:p-8 mb-10 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div>
+          <p className="eyebrow text-white/60 mb-2">Fulfillment</p>
+          <p className="font-serif font-black text-3xl md:text-4xl tracking-tight leading-none">{shipsThisCopy()}</p>
+        </div>
+        <p className="text-sm text-white/70 max-w-sm">
+          We ship every Friday so jerky arrives at peak freshness. Order by <strong className="text-white">Wednesday 11:59pm CT</strong> to make this Friday's run.
+        </p>
+      </div>
+
+      <div className="grid md:grid-cols-2 gap-12">
       <form onSubmit={place} className="space-y-6">
         <div>
           <p className="eyebrow mb-2">Step 1</p>
@@ -96,7 +108,11 @@ export default function CheckoutPage() {
         <div className="flex justify-between font-serif font-black text-2xl mt-3">
           <span>Total</span><span>{formatUSD(cart.subtotalCents)}</span>
         </div>
+        <p className="mt-4 text-xs text-white/60">
+          Ships {shipsThisCopy().replace(/^Ships\s+/i, "")}
+        </p>
       </aside>
+      </div>
     </section>
   );
 }

@@ -1,8 +1,8 @@
 import Link from "next/link";
-import Logo from "@/components/Logo";
 import FlavorCard from "@/components/FlavorCard";
 import { FLAVORS } from "@/lib/products";
 import { formatUSD, SAMPLER_CENTS, SINGLE_PACK_CENTS } from "@/lib/pricing";
+import { shipsThisCopy } from "@/lib/shipping";
 
 export default function HomePage() {
   return (
@@ -22,15 +22,32 @@ export default function HomePage() {
               <Link href="/products" className="btn-primary">Shop the flavors</Link>
               <Link href="/products/sampler" className="btn-secondary">Try the sampler — {formatUSD(SAMPLER_CENTS)}</Link>
             </div>
-            <div className="mt-10 flex flex-wrap gap-x-8 gap-y-2 text-[11px] uppercase tracking-[0.2em] font-semibold text-ink/70">
+            <p className="mt-6 text-[12px] uppercase tracking-[0.2em] font-semibold text-ink/70">
+              <span className="text-ink/50">★</span> {shipsThisCopy()} · Order by Wednesday
+            </p>
+            <div className="mt-6 flex flex-wrap gap-x-8 gap-y-2 text-[11px] uppercase tracking-[0.2em] font-semibold text-ink/70">
               <span>★ All-Natural</span>
               <span>★ Gluten-Free</span>
               <span>★ No Added MSG</span>
               <span>★ No Added Nitrates</span>
             </div>
           </div>
-          <div className="relative aspect-square bg-ink p-8">
-            <Logo variant="stacked" tone="white" className="w-full h-full"/>
+          <div className="relative aspect-square bg-bone">
+            <div className="absolute inset-0 grid grid-cols-2 grid-rows-2 gap-3 p-3">
+              {FLAVORS.slice(0, 4).map(f => (
+                <Link
+                  key={f.sku}
+                  href={`/products/${f.slug}`}
+                  className="relative bg-paper border border-ink/10 hover:border-ink transition-colors overflow-hidden"
+                >
+                  <img
+                    src={f.bagImage}
+                    alt={`${f.name} bag`}
+                    className="absolute inset-0 w-full h-full object-contain p-3"
+                  />
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -40,7 +57,7 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-6 py-14 grid md:grid-cols-4 gap-8">
           <div>
             <p className="font-serif font-black text-3xl tracking-tight italic">save more, eat more.</p>
-            <p className="mt-3 text-sm text-white/70 max-w-xs">Bundle pricing applies automatically at checkout. Mix & match any flavors.</p>
+            <p className="mt-3 text-sm text-white/70 max-w-xs">Bundle pricing applies automatically at checkout. Mix &amp; match any flavors.</p>
           </div>
           <BundleTile label="1 Pack" price={SINGLE_PACK_CENTS} note="Standard"/>
           <BundleTile label="2 Packs" price={SINGLE_PACK_CENTS * 2 * 0.9} note="Save 10%" highlight/>

@@ -16,6 +16,7 @@ export default async function AccountLayout({ children }: { children: React.Reac
           <Link href="/account/addresses" className="block hover:opacity-60">Addresses</Link>
           <Link href="/account/profile" className="block hover:opacity-60">Profile</Link>
           <Link href="/account/preferences" className="block hover:opacity-60">Email preferences</Link>
+          <Link href="/account/reviews" className="block hover:opacity-60">Reviews</Link>
           <form action={async () => { "use server"; await signOut({ redirectTo: "/" }); }}>
             <button className="text-left text-ink/60 hover:text-ink mt-4">Sign out</button>
           </form>

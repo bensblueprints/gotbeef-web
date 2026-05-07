@@ -32,6 +32,25 @@ export default async function OrdersPage() {
 
   return (
     <div>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-12">
+        <Link href="/account/addresses" className="border border-ink/15 bg-paper p-4 hover:border-ink transition-colors">
+          <p className="eyebrow text-ink/50">Addresses</p>
+          <p className="font-serif font-black text-lg tracking-tight mt-1">Shipping book</p>
+        </Link>
+        <Link href="/account/profile" className="border border-ink/15 bg-paper p-4 hover:border-ink transition-colors">
+          <p className="eyebrow text-ink/50">Profile</p>
+          <p className="font-serif font-black text-lg tracking-tight mt-1">Name & email</p>
+        </Link>
+        <Link href="/account/preferences" className="border border-ink/15 bg-paper p-4 hover:border-ink transition-colors">
+          <p className="eyebrow text-ink/50">Email</p>
+          <p className="font-serif font-black text-lg tracking-tight mt-1">Preferences</p>
+        </Link>
+        <Link href="/account/reviews" className="border border-ink/15 bg-paper p-4 hover:border-ink transition-colors">
+          <p className="eyebrow text-ink/50">Reviews</p>
+          <p className="font-serif font-black text-lg tracking-tight mt-1">Yours</p>
+        </Link>
+      </div>
+
       <h1 className="font-serif font-black text-4xl tracking-tight">Your orders</h1>
       {orders.length === 0 ? (
         <div className="mt-12 text-center py-12 border border-ink/10">

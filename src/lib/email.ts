@@ -30,6 +30,32 @@ export async function sendOrderConfirmation(opts: {
   });
 }
 
+export async function sendContactMessage(opts: {
+  name: string; email: string; message: string;
+}) {
+  return resendClient().emails.send({
+    from: FROM,
+    to: "ben@advancedmarketing.co",
+    replyTo: opts.email,
+    subject: `Got Beef — contact from ${opts.name}`,
+    html: brandedEmail(`
+      <h1 style="font-family:Georgia,serif;font-weight:900;letter-spacing:-0.02em;font-size:28px;margin:0 0 8px;">New contact message</h1>
+      <p><strong>Name:</strong> ${escapeHtml(opts.name)}</p>
+      <p><strong>Email:</strong> ${escapeHtml(opts.email)}</p>
+      <p style="margin-top:16px;white-space:pre-wrap">${escapeHtml(opts.message)}</p>
+    `)
+  });
+}
+
+function escapeHtml(s: string) {
+  return s
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
 export async function sendShipmentNotification(opts: {
   to: string; orderNumber: string; tracking: string; carrier: string;
 }) {

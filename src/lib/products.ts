@@ -11,6 +11,7 @@ export type Flavor = {
   heat: 0 | 1 | 2 | 3; // 0 = mild, 3 = hot
   ingredients: string;
   pdf: string;        // packaging PDF in /outputs
+  bagImage: string;   // public path to the SVG bag mockup
 };
 
 export const FLAVORS: Flavor[] = [
@@ -22,7 +23,8 @@ export const FLAVORS: Flavor[] = [
     blurb: "Two ingredients beyond the beef. Salt. Pepper. Done.",
     heat: 0,
     ingredients: "Beef, Ground Pepper, Sea Salt.",
-    pdf: "SaltPepper.pdf"
+    pdf: "SaltPepper.pdf",
+    bagImage: "/images/bag-salt-and-pepper.svg"
   },
   {
     slug: "salt-pepper-garlic",
@@ -32,7 +34,8 @@ export const FLAVORS: Flavor[] = [
     blurb: "The classic, with a kick of dried fried garlic.",
     heat: 0,
     ingredients: "Beef, Sea Salt, Dried Fried Garlic, Ground Black Pepper.",
-    pdf: "SaltPepperGarlic.pdf"
+    pdf: "SaltPepperGarlic.pdf",
+    bagImage: "/images/bag-salt-pepper-garlic.svg"
   },
   {
     slug: "serrano-salt-and-pepper",
@@ -42,7 +45,8 @@ export const FLAVORS: Flavor[] = [
     blurb: "Serrano pepper powder for clean, fresh heat.",
     heat: 2,
     ingredients: "Beef, Sea Salt, Table Grind Pepper, Serrano Pepper Powder.",
-    pdf: "SerranoSaltPepper.pdf"
+    pdf: "SerranoSaltPepper.pdf",
+    bagImage: "/images/bag-serrano-salt-and-pepper.svg"
   },
   {
     slug: "carne-asada",
@@ -53,7 +57,8 @@ export const FLAVORS: Flavor[] = [
     heat: 1,
     ingredients:
       "Beef, Orange Juice, Lime Juice, Sea Salt, Granulated Onion, Cilantro, Granulated Garlic, Cumin, Black Pepper, Paprika.",
-    pdf: "CarneAsada.pdf"
+    pdf: "CarneAsada.pdf",
+    bagImage: "/images/bag-carne-asada.svg"
   },
   {
     slug: "simply-bar-b",
@@ -64,7 +69,8 @@ export const FLAVORS: Flavor[] = [
     heat: 1,
     ingredients:
       "Beef, Granulated Monk Fruit Sweetener (Allulose, Monk Fruit Extract), Sea Salt, Garlic Powder, Tomato Powder, Onion Powder, Smoked Paprika, Mustard Powder, Dried Thyme, Table Grind Pepper, Cayenne.",
-    pdf: "CleanSimplyBar-B.pdf"
+    pdf: "CleanSimplyBar-B.pdf",
+    bagImage: "/images/bag-simply-bar-b.svg"
   }
 ];
 

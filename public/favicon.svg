@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,900&amp;display=swap');
+      .gb { font-family: 'Playfair Display', Georgia, serif; font-weight: 900; fill: #ffffff; letter-spacing: -0.04em; }
+    </style>
+  </defs>
+  <rect width="512" height="512" fill="#000000"/>
+  <rect x="40" y="40" width="432" height="432" fill="none" stroke="#ffffff" stroke-width="6"/>
+  <rect x="56" y="56" width="400" height="400" fill="none" stroke="#ffffff" stroke-width="1.5"/>
+  <text x="256" y="370" class="gb" font-size="320" text-anchor="middle">gb</text>
+</svg>
