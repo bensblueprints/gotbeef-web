@@ -1,0 +1,26 @@
+# Netlify config for the Got Beef Next.js storefront.
+[build]
+  command = "prisma generate && next build"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "20"
+  # Skip type-checking in CI for faster deploys; tsc runs locally.
+  NEXT_TELEMETRY_DISABLED = "1"
+
+# @netlify/plugin-nextjs is auto-installed by Netlify when it detects Next.js,
+# but pinning it ensures reproducible builds.
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+# Webhook routes need to bypass any caching.
+[[headers]]
+  for = "/api/webhooks/*"
+  [headers.values]
+    Cache-Control = "no-store"
+
+# Storefront pages can be edge-cached briefly for performance.
+[[headers]]
+  for = "/products/*"
+  [headers.values]
+    Cache-Control = "public, max-age=0, s-maxage=300, stale-while-revalidate=86400"
