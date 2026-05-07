@@ -56,7 +56,7 @@ export default function HomePage() {
       <section className="bg-ink text-white">
         <div className="max-w-7xl mx-auto px-6 py-14 grid md:grid-cols-4 gap-8">
           <div>
-            <p className="font-serif font-black text-3xl tracking-tight italic">save more, eat more.</p>
+            <p className="font-serif font-black text-3xl tracking-tight italic">eat more, save more.</p>
             <p className="mt-3 text-sm text-white/70 max-w-xs">Bundle pricing applies automatically at checkout. Mix &amp; match any flavors.</p>
           </div>
           <BundleTile label="1 Pack" price={SINGLE_PACK_CENTS} note="Standard"/>
