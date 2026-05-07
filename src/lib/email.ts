@@ -2,14 +2,22 @@
 // Templates live inline as TSX strings — keep them simple, brand-on.
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
 const FROM = process.env.RESEND_FROM ?? "Got Beef <orders@gotbeef.us>";
+
+let _resend: Resend | null = null;
+function resendClient() {
+  if (_resend) return _resend;
+  const key = process.env.RESEND_API_KEY;
+  if (!key) throw new Error("RESEND_API_KEY is not set");
+  _resend = new Resend(key);
+  return _resend;
+}
 
 export async function sendOrderConfirmation(opts: {
   to: string; orderNumber: string; totalCents: number; items: { name: string; qty: number }[];
 }) {
   const itemsHtml = opts.items.map(i => `<li>${i.qty} × ${i.name}</li>`).join("");
-  return resend.emails.send({
+  return resendClient().emails.send({
     from: FROM,
     to: opts.to,
     subject: `Got Beef — order ${opts.orderNumber} confirmed`,
@@ -25,7 +33,7 @@ export async function sendOrderConfirmation(opts: {
 export async function sendShipmentNotification(opts: {
   to: string; orderNumber: string; tracking: string; carrier: string;
 }) {
-  return resend.emails.send({
+  return resendClient().emails.send({
     from: FROM,
     to: opts.to,
     subject: `Got Beef — your order ${opts.orderNumber} has shipped`,
