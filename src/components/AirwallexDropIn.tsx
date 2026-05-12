@@ -12,57 +12,80 @@ interface Props {
 
 export default function AirwallexDropIn({ intentId, clientSecret, orderId, env }: Props) {
   const router = useRouter();
-  const [scriptReady, setScriptReady] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [status, setStatus] = useState<"loading" | "ready" | "error">("loading");
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const mounted = useRef(false);
 
-  useEffect(() => {
-    if (!scriptReady || mounted.current) return;
+  function handleScriptError() {
+    setStatus("error");
+    setErrorMsg("Payment provider failed to load. Please refresh the page.");
+  }
+
+  async function handleScriptReady() {
+    if (mounted.current) return;
     mounted.current = true;
 
     const aw = (window as any).Airwallex;
     if (!aw) {
-      setError("Payment provider failed to load. Please refresh.");
+      setStatus("error");
+      setErrorMsg("Payment provider unavailable. Please refresh.");
       return;
     }
 
     try {
-      aw.init({ env, origin: window.location.origin });
+      // init() is async — must await before createElement
+      await aw.init({ env, origin: window.location.origin });
 
-      const dropIn = aw.createElement("dropIn", {
+      const element = aw.createElement("dropIn", {
         intent: { id: intentId, client_secret: clientSecret },
         currency: "USD",
       });
 
-      dropIn.on("success", () => {
+      element.on("success", () => {
         router.push(`/checkout/return?order=${orderId}`);
       });
 
-      dropIn.on("error", (event: any) => {
-        const msg = event?.detail?.message ?? event?.message ?? "Payment failed. Please try again.";
-        setError(msg);
-        mounted.current = false; // allow remount on retry
+      element.on("error", (event: any) => {
+        const msg =
+          event?.detail?.message ??
+          event?.message ??
+          "Payment failed. Please try again.";
+        setStatus("error");
+        setErrorMsg(msg);
+        mounted.current = false;
       });
 
-      dropIn.mount("#airwallex-dropin");
+      element.on("ready", () => setStatus("ready"));
+
+      element.mount("#airwallex-dropin");
     } catch (e: any) {
-      setError(e?.message ?? "Failed to initialize payment form.");
+      setStatus("error");
+      setErrorMsg(e?.message ?? "Failed to initialize payment form.");
+      mounted.current = false;
     }
-  }, [scriptReady, intentId, clientSecret, orderId, env, router]);
+  }
 
   return (
     <>
       <Script
         src="https://checkout.airwallex.com/assets/elements.bundle.min.js"
-        onReady={() => setScriptReady(true)}
-        onError={() => setError("Payment provider failed to load. Please refresh.")}
+        onReady={handleScriptReady}
+        onError={handleScriptError}
       />
-      {error && (
+
+      {errorMsg && (
         <div className="mb-6 border border-red-300 bg-red-50 px-4 py-3 text-sm text-red-700">
-          {error}
+          {errorMsg}
         </div>
       )}
-      <div id="airwallex-dropin" className="min-h-[400px]"/>
+
+      {status === "loading" && !errorMsg && (
+        <div className="flex items-center justify-center h-40 text-ink/40 text-sm">
+          Loading payment form…
+        </div>
+      )}
+
+      <div id="airwallex-dropin" className={status === "ready" ? "" : "hidden"} />
     </>
   );
 }

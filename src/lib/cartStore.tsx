@@ -5,6 +5,7 @@ import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { CartLine, priceCart, CartTotals } from "./pricing";
 
 type CartContextValue = CartTotals & {
+  hydrated: boolean;
   add: (line: CartLine) => void;
   remove: (sku: string) => void;
   setQty: (sku: string, qty: number) => void;
@@ -36,6 +37,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   const value: CartContextValue = {
     ...totals,
+    hydrated,
     add: (line) => setLines(prev => {
       const idx = prev.findIndex(l => l.sku === line.sku);
       if (idx >= 0) {
@@ -57,10 +59,10 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 export function useCart(): CartContextValue {
   const ctx = useContext(CartContext);
   if (!ctx) {
-    // Safe defaults so SSR/non-providers don't crash.
     const empty = priceCart([]);
     return {
       ...empty,
+      hydrated: false,
       add: () => {}, remove: () => {}, setQty: () => {}, clear: () => {}
     };
   }
