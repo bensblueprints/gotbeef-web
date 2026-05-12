@@ -17,8 +17,8 @@ export async function POST(req: NextRequest) {
       create: { email: data.email.toLowerCase(), source: data.source, consentMarketing: true },
       update: { source: data.source, consentMarketing: true }
     });
-    // Then push to Klaviyo (best-effort — skip silently if unconfigured).
-    if (process.env.KLAVIYO_PRIVATE_API_KEY && process.env.KLAVIYO_NEWSLETTER_LIST_ID) {
+    // Then push to Brevo (best-effort — skip silently if unconfigured).
+    if (process.env.BREVO_API_KEY && process.env.BREVO_LIST_ID) {
       try {
         await subscribeToList(data.email, { source: data.source });
         await db.emailCapture.update({
@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
           data: { klaviyoSyncedAt: new Date() }
         });
       } catch (e) {
-        console.warn("Klaviyo sync failed, will retry later", e);
+        console.warn("Brevo sync failed, will retry later", e);
       }
     }
     return NextResponse.json({ ok: true });
