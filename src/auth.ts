@@ -1,25 +1,29 @@
-// Auth.js (NextAuth v5) — email magic-link via Resend + email/password.
+// Auth.js (NextAuth v5) — magic-link via Brevo + email/password (admin).
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-import Resend from "next-auth/providers/resend";
+import Email from "next-auth/providers/nodemailer";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { db } from "@/lib/db";
+import { sendMagicLink } from "@/lib/email";
 
 const adminAllowlist = (process.env.ADMIN_EMAIL_ALLOWLIST ?? "")
   .split(",").map(s => s.trim().toLowerCase()).filter(Boolean);
 
-// Magic-link via Resend is only registered when RESEND_API_KEY is set, so the
-// provider doesn't blow up auth at runtime before email is wired up.
-const resendKey = process.env.RESEND_API_KEY;
 const providers: any[] = [];
-if (resendKey) {
+
+if (process.env.BREVO_API_KEY) {
   providers.push(
-    Resend({
-      from: process.env.RESEND_FROM ?? "Got Beef <orders@gotbeef.us>",
-      apiKey: resendKey,
+    Email({
+      from: "Got Beef <orders@gotbeef.us>",
+      // Dummy server — we override sendVerificationRequest entirely
+      server: "smtp://localhost",
+      sendVerificationRequest: async ({ identifier, url }) => {
+        await sendMagicLink({ to: identifier, url });
+      },
     })
   );
 }
+
 providers.push(
   Credentials({
     credentials: { email: {}, password: {} },

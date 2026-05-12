@@ -15,9 +15,9 @@ export default function LoginPage() {
     setError(null);
     setBusy(true);
     try {
-      const res = await signIn("resend", { email, redirectTo: "/account", redirect: false });
+      const res = await signIn("nodemailer", { email, redirectTo: "/account", redirect: false });
       if ((res as any)?.error) {
-        setError("Email sign-in isn't configured yet. Try the password tab if you have an admin account.");
+        setError("Couldn't send sign-in email. Please try again or contact support.");
       } else {
         setSent(true);
       }
