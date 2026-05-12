@@ -15,7 +15,7 @@ const STATUS_LABEL: Record<string, string> = {
 export default async function AdminOrdersPage() {
   const orders = await db.order.findMany({
     orderBy: { createdAt: "desc" },
-    take: 100,
+    take: 500,
     include: { items: true }
   });
 
