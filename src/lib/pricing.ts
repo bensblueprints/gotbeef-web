@@ -6,14 +6,20 @@
 //   2 packs           save 10%   ($35.98)
 //   3 packs           save 15%   ($50.97)
 //   4+ packs          15% off everything
-//   Sampler (5 flavors, one of each)  $75
+//   Sampler (4 flavors, one of each)  $59.99
 //   Free shipping at $50 subtotal
 
 import { SAMPLER_SKU } from "./products";
 
 export const SINGLE_PACK_CENTS = 1999;
-export const SAMPLER_CENTS = 7500;
-export const FREE_SHIPPING_THRESHOLD_CENTS = 5000;
+export const SAMPLER_CENTS = 5999;
+export const FREE_SHIPPING_THRESHOLD_CENTS = Number(
+  process.env.NEXT_PUBLIC_FREE_SHIPPING_THRESHOLD_CENTS ?? "5000"
+);
+/** Flat-rate shipping when subtotal is below free-shipping threshold. */
+export const STANDARD_SHIPPING_CENTS = Number(
+  process.env.NEXT_PUBLIC_STANDARD_SHIPPING_CENTS ?? "599"
+);
 
 export type CartLine = {
   sku: string;
@@ -90,10 +96,10 @@ export function priceCart(lines: CartLine[]): CartTotals {
 
   const qualifiesForFreeShipping = subtotalCents >= FREE_SHIPPING_THRESHOLD_CENTS;
   const amountToFreeShippingCents = Math.max(0, FREE_SHIPPING_THRESHOLD_CENTS - subtotalCents);
-  const shippingCents = qualifiesForFreeShipping ? 0 : 0; // V1: shipping resolved at checkout via ShipStation rate API
+  const shippingCents = qualifiesForFreeShipping ? 0 : STANDARD_SHIPPING_CENTS;
 
   return {
-    itemCount: singlePackQty + samplerQty * 5,
+    itemCount: singlePackQty + samplerQty * 4,
     lines: priced,
     subtotalCents,
     bundleDiscountCents,

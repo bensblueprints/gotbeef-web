@@ -21,9 +21,9 @@ export default function ShopPage() {
         {FLAVORS.map(f => <FlavorCard key={f.sku} flavor={f}/>)}
         <Link href="/products/sampler" className="bg-ink text-white p-8 flex flex-col justify-between hover:opacity-90">
           <div>
-            <p className="eyebrow text-white/60">5-Flavor Sampler</p>
+            <p className="eyebrow text-white/60">4-Flavor Sampler</p>
             <p className="font-serif font-black text-4xl mt-3 leading-none tracking-tight">One of every flavor.</p>
-            <p className="mt-3 text-sm text-white/80">All five SKUs in a single box.</p>
+            <p className="mt-3 text-sm text-white/80">All four flavors in a single box.</p>
           </div>
           <div className="mt-6 flex items-center justify-between">
             <span className="font-serif text-3xl font-black">{formatUSD(SAMPLER_CENTS)}</span>

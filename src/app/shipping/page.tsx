@@ -61,7 +61,7 @@ export default function ShippingPage() {
           eyebrow="Free Shipping"
           title="Free over $50. Always."
         >
-          <p>Spend $50 or more in a single order and shipping is on us — no code needed, no surprise add-ons at checkout. The sampler ($55) qualifies. So does any 3-pack bundle.</p>
+          <p>Spend $50 or more in a single order and shipping is on us — no code needed, no surprise add-ons at checkout. The sampler ($59.99) qualifies. So does any 3-pack bundle.</p>
         </Block>
 
         <Block

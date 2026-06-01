@@ -51,7 +51,7 @@ export default function Footer() {
           <p className="eyebrow mb-4">Shop</p>
           <ul className="space-y-2 text-sm">
             <li><Link href="/products" className="hover:opacity-60">All flavors</Link></li>
-            <li><Link href="/products/sampler" className="hover:opacity-60">5-flavor sampler</Link></li>
+            <li><Link href="/products/sampler" className="hover:opacity-60">4-flavor sampler</Link></li>
             <li><Link href="/products?bundles=1" className="hover:opacity-60">Bundles</Link></li>
           </ul>
         </div>

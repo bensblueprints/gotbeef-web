@@ -104,7 +104,7 @@ export default async function AdminShippingPage({
                 return (
                   <tr key={sku} className="border-t border-ink/10">
                     <td className="p-3 font-mono">{sku}</td>
-                    <td className="p-3">{f?.name ?? (sku.includes("SAMPLER") ? "Sampler (5-pack)" : "—")}</td>
+                    <td className="p-3">{f?.name ?? (sku.includes("SAMPLER") ? "Sampler (4-pack)" : "—")}</td>
                     <td className="p-3 text-right font-mono">{qty}</td>
                   </tr>
                 );

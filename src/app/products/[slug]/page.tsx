@@ -225,21 +225,18 @@ function SamplerPage() {
   return (
     <section className="max-w-7xl mx-auto px-6 py-16 grid md:grid-cols-2 gap-12">
       <div className="bg-bone border border-ink/10 aspect-square relative p-6 md:p-8">
-        <div className="absolute inset-0 grid grid-cols-2 grid-rows-3 gap-3 p-4">
+        <div className="absolute inset-0 grid grid-cols-2 grid-rows-2 gap-3 p-4">
           {FLAVORS.slice(0, 4).map(f => (
             <div key={f.sku} className="relative bg-paper border border-ink/10">
               <img src={f.bagImage} alt={f.name} className="absolute inset-0 w-full h-full object-contain p-2"/>
             </div>
           ))}
-          <div className="relative bg-paper border border-ink/10 col-span-2">
-            <img src={FLAVORS[4].bagImage} alt={FLAVORS[4].name} className="absolute inset-0 w-full h-full object-contain p-2"/>
-          </div>
         </div>
       </div>
 
       <div>
         <Link href="/products" className="text-xs uppercase tracking-[0.2em] hover:opacity-60">← All flavors</Link>
-        <p className="eyebrow mt-6 mb-2">5-Flavor Sampler</p>
+        <p className="eyebrow mt-6 mb-2">4-Flavor Sampler</p>
         <h1 className="font-serif font-black text-5xl md:text-6xl tracking-tight">Try everything.</h1>
         <p className="mt-4 text-lg text-ink/80 max-w-md">
           One pack of every flavor in a single box. The fastest way to figure out which one you'll re-order.
@@ -247,16 +244,16 @@ function SamplerPage() {
         <div className="my-8 rule"/>
         <div className="flex items-center gap-6 mb-6">
           <span className="font-serif font-black text-4xl">{formatUSD(SAMPLER_CENTS)}</span>
-          <span className="line-through text-ink/40">{formatUSD(SINGLE_PACK_CENTS * 5)}</span>
+          <span className="line-through text-ink/40">{formatUSD(SINGLE_PACK_CENTS * 4)}</span>
           <span className="bg-ink text-white text-xs px-2 py-1 font-semibold tracking-wider">SAVE 25%</span>
         </div>
-        <AddToCartBox sku="GB-SAMPLER-5" singlePriceCents={SAMPLER_CENTS} isSampler/>
+        <AddToCartBox sku="GB-SAMPLER-4" singlePriceCents={SAMPLER_CENTS} isSampler/>
         <div className="mt-6"><ShipBanner tone="bone"/></div>
         <div className="my-8 rule-soft"/>
         <div>
           <p className="eyebrow mb-3">What's in the box</p>
           <ul className="space-y-1 text-sm">
-            {FLAVORS.map(f => <li key={f.sku}>· 1 × {f.name} (3 oz)</li>)}
+            {FLAVORS.slice(0, 4).map(f => <li key={f.sku}>· 1 × {f.name} (3 oz)</li>)}
           </ul>
         </div>
       </div>

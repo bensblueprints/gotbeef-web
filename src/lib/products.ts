@@ -24,7 +24,7 @@ export const FLAVORS: Flavor[] = [
     heat: 0,
     ingredients: "Beef, Ground Pepper, Sea Salt.",
     pdf: "SaltPepper.pdf",
-    bagImage: "/images/bag-salt-and-pepper.svg"
+    bagImage: "/images/bags-photo/bag-salt-and-pepper-photo.png"
   },
   {
     slug: "salt-pepper-garlic",
@@ -35,7 +35,7 @@ export const FLAVORS: Flavor[] = [
     heat: 0,
     ingredients: "Beef, Sea Salt, Dried Fried Garlic, Ground Black Pepper.",
     pdf: "SaltPepperGarlic.pdf",
-    bagImage: "/images/bag-salt-pepper-garlic.svg"
+    bagImage: "/images/bags-photo/bag-salt-pepper-garlic-photo.png"
   },
   {
     slug: "serrano-salt-and-pepper",
@@ -46,7 +46,7 @@ export const FLAVORS: Flavor[] = [
     heat: 2,
     ingredients: "Beef, Sea Salt, Table Grind Pepper, Serrano Pepper Powder.",
     pdf: "SerranoSaltPepper.pdf",
-    bagImage: "/images/bag-serrano-salt-and-pepper.svg"
+    bagImage: "/images/bags-photo/bag-serrano-salt-and-pepper-photo.png"
   },
   {
     slug: "carne-asada",
@@ -58,7 +58,7 @@ export const FLAVORS: Flavor[] = [
     ingredients:
       "Beef, Orange Juice, Lime Juice, Sea Salt, Granulated Onion, Cilantro, Granulated Garlic, Cumin, Black Pepper, Paprika.",
     pdf: "CarneAsada.pdf",
-    bagImage: "/images/bag-carne-asada.svg"
+    bagImage: "/images/bags-photo/bag-carne-asada-photo.png"
   },
   {
     slug: "simply-bar-b",
@@ -70,11 +70,11 @@ export const FLAVORS: Flavor[] = [
     ingredients:
       "Beef, Granulated Monk Fruit Sweetener (Allulose, Monk Fruit Extract), Sea Salt, Garlic Powder, Tomato Powder, Onion Powder, Smoked Paprika, Mustard Powder, Dried Thyme, Table Grind Pepper, Cayenne.",
     pdf: "CleanSimplyBar-B.pdf",
-    bagImage: "/images/bag-simply-bar-b.svg"
+    bagImage: "/images/bags-photo/bag-simply-bar-b-photo.png"
   }
 ];
 
-export const SAMPLER_SKU = "GB-SAMPLER-5";
+export const SAMPLER_SKU = "GB-SAMPLER-4";
 
 // Stable lookups
 export const flavorBySlug = (slug: string) => FLAVORS.find(f => f.slug === slug);
