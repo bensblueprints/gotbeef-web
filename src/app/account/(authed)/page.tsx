@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { auth } from "@/auth";
 import { db } from "@/lib/db";
 import { formatUSD } from "@/lib/pricing";
@@ -24,8 +25,9 @@ const TRACK_URL: Record<string, (n: string) => string> = {
 
 export default async function OrdersPage() {
   const session = await auth();
+  if (!session?.user) redirect("/account/login");
   const orders = await db.order.findMany({
-    where: { userId: session!.user!.id },
+    where: { userId: session.user.id },
     orderBy: { createdAt: "desc" },
     include: { items: true }
   });

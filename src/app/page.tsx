@@ -92,6 +92,28 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* VIRAL COMMERCIALS */}
+      <section className="bg-ink text-white border-t border-ink">
+        <div className="max-w-7xl mx-auto px-6 py-20">
+          <div className="flex items-end justify-between mb-10 border-b border-white/20 pb-4">
+            <div>
+              <p className="eyebrow text-white/60 mb-2">As Seen Online</p>
+              <h2 className="font-serif font-black text-4xl md:text-5xl tracking-tight">Viral Commercials</h2>
+            </div>
+          </div>
+          <div className="relative w-full overflow-hidden border border-white/20" style={{ aspectRatio: "16 / 9" }}>
+            <iframe
+              className="absolute inset-0 h-full w-full"
+              src="https://www.youtube.com/embed/4pJeyW-B73k"
+              title="Got Beef — Viral Commercial"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
+            />
+          </div>
+        </div>
+      </section>
+
       {/* STORY */}
       <section className="border-y border-ink bg-bone">
         <div className="max-w-7xl mx-auto px-6 py-20 grid md:grid-cols-2 gap-16 items-center">

@@ -1,0 +1,37 @@
+[
+  {
+    "slug": "salt-and-pepper",
+    "name": "Salt & Pepper",
+    "output": "bag-salt-and-pepper-photo.png",
+    "referenceSvg": "bag-salt-and-pepper.svg",
+    "jerky": "dark mahogany brisket strips with coarse black pepper and sea salt, dry fibrous texture"
+  },
+  {
+    "slug": "salt-pepper-garlic",
+    "name": "Salt, Pepper & Garlic",
+    "output": "bag-salt-pepper-garlic-photo.png",
+    "referenceSvg": "bag-salt-pepper-garlic.svg",
+    "jerky": "rich brown brisket jerky with visible dried garlic flakes and cracked black pepper"
+  },
+  {
+    "slug": "serrano-salt-and-pepper",
+    "name": "Serrano Salt & Pepper",
+    "output": "bag-serrano-salt-and-pepper-photo.png",
+    "referenceSvg": "bag-serrano-salt-and-pepper.svg",
+    "jerky": "brisket jerky with serrano heat, reddish-brown tones, green chili flecks, salt and pepper crust"
+  },
+  {
+    "slug": "carne-asada",
+    "name": "Carne Asada",
+    "output": "bag-carne-asada-photo.png",
+    "referenceSvg": "bag-carne-asada.svg",
+    "jerky": "citrus-marinated carne asada brisket jerky, deep brown with subtle orange-lime sheen, cilantro and cumin notes"
+  },
+  {
+    "slug": "simply-bar-b",
+    "name": "Simply Bar-B",
+    "output": "bag-simply-bar-b-photo.png",
+    "referenceSvg": "bag-simply-bar-b.svg",
+    "jerky": "sweet smoky BBQ brisket jerky, dark brown with smoked paprika and tomato BBQ glaze appearance"
+  }
+]

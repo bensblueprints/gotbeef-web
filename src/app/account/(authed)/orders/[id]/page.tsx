@@ -1,15 +1,16 @@
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { auth } from "@/auth";
 import { db } from "@/lib/db";
 import { formatUSD } from "@/lib/pricing";
 
 export default async function OrderDetail({ params }: { params: { id: string } }) {
   const session = await auth();
+  if (!session?.user) redirect("/account/login");
   const order = await db.order.findUnique({
     where: { id: params.id },
     include: { items: true, shippingAddress: true }
   });
-  if (!order || order.userId !== session!.user!.id) notFound();
+  if (!order || order.userId !== session.user.id) notFound();
 
   return (
     <div>

@@ -2,7 +2,8 @@
 // Designed for Next.js 14 + Auth.js v5 + Airwallex + ShipStation.
 
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "rhel-openssl-3.0.x"]
 }
 
 datasource db {

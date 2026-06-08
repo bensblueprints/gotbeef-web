@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 600" width="1400" height="600">
+  <rect width="1400" height="600" fill="#0a0a0a"/>
+  <rect x="60" y="60" width="1280" height="480" fill="none" stroke="#ffffff" stroke-width="4"/>
+  <rect x="80" y="80" width="1240" height="440" fill="none" stroke="#ffffff" stroke-width="1"/>
+  <text x="700" y="370" text-anchor="middle" font-family="Georgia, 'Playfair Display', serif" font-weight="900" font-size="240" letter-spacing="-0.03em" fill="#ffffff">got beef?</text>
+  <line x1="280" y1="430" x2="1120" y2="430" stroke="#ffffff" stroke-width="2"/>
+  <text x="700" y="480" text-anchor="middle" font-family="Helvetica, Inter, sans-serif" font-weight="800" font-size="20" letter-spacing="0.34em" fill="#ffffff">GRASS-FED � GLUTEN-FREE � NO FILLERS</text>
+</svg>

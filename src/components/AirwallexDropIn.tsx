@@ -69,7 +69,7 @@ export default function AirwallexDropIn({ intentId, clientSecret, orderId, env }
     <>
       <Script
         src="https://checkout.airwallex.com/assets/elements.bundle.min.js"
-        onReady={handleScriptReady}
+        onReady={() => { void handleScriptReady(); }}
         onError={handleScriptError}
       />
 

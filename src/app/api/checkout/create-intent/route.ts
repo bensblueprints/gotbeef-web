@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
+import { auth } from "@/auth";
 import { db } from "@/lib/db";
 import { priceCart } from "@/lib/pricing";
 import { createPaymentIntent } from "@/lib/integrations/airwallex";
@@ -12,25 +13,37 @@ const Body = z.object({
     name: z.string(), line1: z.string(), line2: z.string().optional(),
     city: z.string(), state: z.string(), postalCode: z.string(),
     country: z.string().default("US"), phone: z.string().optional()
-  })
+  }),
+  marketingOptIn: z.boolean().optional()
 });
+
+async function uniqueOrderNumber(): Promise<string> {
+  for (let i = 0; i < 8; i++) {
+    const num = "GB-" + Math.floor(100000 + Math.random() * 900000);
+    const exists = await db.order.findUnique({ where: { number: num }, select: { id: true } });
+    if (!exists) return num;
+  }
+  throw new Error("Could not generate order number");
+}
 
 export async function POST(req: NextRequest) {
   try {
+    const session = await auth();
+    const userId = (session?.user as { id?: string } | undefined)?.id;
     const input = Body.parse(await req.json());
     const totals = priceCart(input.lines);
+    const totalCents = totals.subtotalCents + totals.shippingCents;
 
-    // Generate human-friendly order number
-    const num = "GB-" + Math.floor(100000 + Math.random() * 900000);
     const order = await db.order.create({
       data: {
-        number: num,
-        email: input.email,
+        number: await uniqueOrderNumber(),
+        email: input.email.toLowerCase(),
+        ...(userId ? { user: { connect: { id: userId } } } : {}),
         subtotalCents: totals.subtotalCents,
         bundleDiscountCents: totals.bundleDiscountCents,
         shippingCents: totals.shippingCents,
         taxCents: 0,
-        totalCents: totals.subtotalCents + totals.shippingCents,
+        totalCents,
         shippingAddress: { create: { ...input.shipTo } },
         items: {
           create: totals.lines.map(l => ({
@@ -51,10 +64,30 @@ export async function POST(req: NextRequest) {
       email: input.email
     });
 
-    // Hosted checkout URL pattern (Airwallex Drop-in or hosted page).
-    const checkoutUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/checkout/pay?intent=${intent.id}&secret=${intent.client_secret}&order=${order.id}`;
-    return NextResponse.json({ ok: true, orderId: order.id, intent: intent.id, checkoutUrl });
-  } catch (err: any) {
-    return NextResponse.json({ ok: false, error: err.message }, { status: 400 });
+    await db.order.update({
+      where: { id: order.id },
+      data: { airwallexIntentId: intent.id }
+    });
+
+    if (input.marketingOptIn) {
+      await db.emailCapture.upsert({
+        where: { email: input.email.toLowerCase() },
+        create: { email: input.email.toLowerCase(), source: "checkout", consentMarketing: true },
+        update: { source: "checkout", consentMarketing: true }
+      }).catch(() => {});
+    }
+
+    const site = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+    const checkoutUrl = `${site}/checkout/pay?order=${order.id}`;
+    return NextResponse.json({
+      ok: true,
+      orderId: order.id,
+      orderNumber: order.number,
+      intent: intent.id,
+      checkoutUrl
+    });
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : "Checkout failed";
+    return NextResponse.json({ ok: false, error: message }, { status: 400 });
   }
 }

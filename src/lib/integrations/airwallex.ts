@@ -45,6 +45,15 @@ export async function createPaymentIntent(input: {
   return res.json() as Promise<{ id: string; client_secret: string; status: string }>;
 }
 
+export async function getPaymentIntent(intentId: string) {
+  const token = await authToken();
+  const res = await fetch(`${BASE}/api/v1/pa/payment_intents/${intentId}`, {
+    headers: { Authorization: `Bearer ${token}` }
+  });
+  if (!res.ok) throw new Error(`Airwallex get intent failed: ${res.status}`);
+  return res.json() as Promise<{ id: string; client_secret: string; status: string }>;
+}
+
 /**
  * Verify webhook signature using AIRWALLEX_WEBHOOK_SECRET.
  * Airwallex signs webhooks with HMAC SHA256 over the raw body + timestamp.

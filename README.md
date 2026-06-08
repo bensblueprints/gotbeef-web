@@ -27,7 +27,7 @@ Admin dashboard: https://gotbeef.us/admin
 ## Stack
 
 - **Next.js 14** (App Router) + **TypeScript** + **Tailwind**
-- **Postgres** via **Prisma** — hosted on Coolify (container `eo6y0osl7r1fxjk48s4frxao`)
+- **Postgres** via **Prisma** — **Supabase** (shared project, isolated `gotbeef` schema)
 - **Auth.js v5** — magic-link email (Resend) + email/password (admin)
 - **Airwallex** — payment processing (Drop-in checkout)
 - **ShipStation** — order fulfillment + tracking
@@ -85,7 +85,7 @@ Set in Coolify → Got Beef → Environment Variables.
 
 | Var | Status | Notes |
 |---|---|---|
-| `DATABASE_URL` | ✅ Set | Points to internal Coolify Postgres container |
+| `DATABASE_URL` | ✅ Set | Supabase pooler (`schema=gotbeef`); Netlify + local `.env` |
 | `AUTH_SECRET` | ✅ Set | JWT signing secret |
 | `AUTH_URL` | ✅ Set | `https://gotbeef.us` |
 | `AUTH_TRUST_HOST` | ✅ Set | `true` |
