@@ -18,7 +18,7 @@ Gourmet brisket beef jerky e-commerce site. Custom-built (not Shopify), with bun
 |---|---|
 | URL | https://gotbeef.us/account/login → Password tab |
 | Email | ben@advancedmarketing.co |
-| Password | see `ADMIN_BOOTSTRAP_PASSWORD` env var in Coolify |
+| Password | see `ADMIN_BOOTSTRAP_PASSWORD` env var in Netlify |
 
 Admin dashboard: https://gotbeef.us/admin
 
@@ -33,7 +33,7 @@ Admin dashboard: https://gotbeef.us/admin
 - **ShipStation** — order fulfillment + tracking
 - **Klaviyo** — marketing email
 - **Resend** — transactional email + magic-link auth
-- **Coolify** — hosting on Contabo VPS 2 (212.28.184.24)
+- **Netlify** — hosting + CDN, deployed via GitHub Actions on push to `main`
 
 ---
 
@@ -69,19 +69,18 @@ Requires `RESEND_API_KEY` to be set. Without it, the magic-link tab is disabled 
 
 | Service | Details |
 |---|---|
-| Hosting | Coolify — http://212.28.184.24:8000 |
-| Server | Contabo VPS 2, 212.28.184.24, 24 GB RAM, 387 GB SSD |
-| SSH | `ssh -i ~/.ssh/id_leadripper root@212.28.184.24` |
-| App container | `o130void8r01wawvpr9too4o` |
-| DB container | `eo6y0osl7r1fxjk48s4frxao` (Postgres 16) |
-| Coolify project UUID | `q7fdquxqbwl0vs9y7hoqao99` |
-| DNS | Cloudflare → 212.28.184.24 |
+| Hosting | Netlify — `@netlify/plugin-nextjs`, serverless functions for SSR/API routes |
+| Deploy | GitHub Actions (`.github/workflows/deploy-netlify.yml`) → `netlify deploy --build --prod` on every push to `main`. Manual: `workflow_dispatch`. |
+| Repo | `github.com/bensblueprints/gotbeef-web` (branch `main`) |
+| GitHub secrets | `NETLIFY_AUTH_TOKEN`, `NETLIFY_SITE_ID` |
+| Database | Supabase Postgres (shared project, isolated `gotbeef` schema) via pooler |
+| DNS | Cloudflare → Netlify (`gotbeef.us`, `www` redirect) |
 
 ---
 
 ## Environment Variables
 
-Set in Coolify → Got Beef → Environment Variables.
+Set in Netlify → Site configuration → Environment variables (and mirrored in local `.env` for development).
 
 | Var | Status | Notes |
 |---|---|---|
@@ -91,7 +90,7 @@ Set in Coolify → Got Beef → Environment Variables.
 | `AUTH_TRUST_HOST` | ✅ Set | `true` |
 | `NEXT_PUBLIC_SITE_URL` | ✅ Set | `https://gotbeef.us` |
 | `ADMIN_EMAIL_ALLOWLIST` | ✅ Set | `ben@advancedmarketing.co` |
-| `ADMIN_BOOTSTRAP_PASSWORD` | ✅ Set | Admin password (see Coolify) |
+| `ADMIN_BOOTSTRAP_PASSWORD` | ✅ Set | Admin password (see Netlify env) |
 | `RESEND_FROM` | ✅ Set | `Got Beef <orders@gotbeef.us>` |
 | `AIRWALLEX_CLIENT_ID` | ✅ Set | Scoped key — Client ID |
 | `AIRWALLEX_API_KEY` | ✅ Set | Scoped key — API secret |
